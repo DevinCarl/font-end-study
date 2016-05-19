@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>BOM</title>
+</head>
+
+<body>
+  <h1>Window 对象</h1>
+  <ol>
+    <li>
+      <h2>尝试访问未声明的变量会抛出错误，但通过查询window对象，可以知道某个可能未声明的变量是否存在。</h2>
+      <pre>
+var newVal = window.oldVal;  //newVal为undefined
+var newVal = oldVal; //报错
+		</pre>
+    </li>
+    <li>
+    	<h2>获取窗口大小</h2>
+    	<pre>
+var pageWidth = window.innerWidth,
+  pageHeight = window.innerHeight;
+
+if (typeof pageWidth != "number") {
+	if (document.compatMode = "CSS1Compat") {
+		pageWidth = document.documentElement.clientWidth;
+		pageHeight = document.documentElement.clientHeight;
+	}else {
+		pageWidth = document.body.clientWidth;
+		pageHeight = document.body.clientHeight;
+	}
+}
+    	</pre>
+    </li>
+    <li>
+    	<h2>弹出窗口屏蔽检测</h2>
+    	<pre>
+var blocked = false;
+try{
+	var wroxWin = window.open("//www.baidu.com","_blank");
+	if (wroxWin == null) {
+		blocked = true;
+	}
+}catch (ex) {
+	blocked = true;
+}
+if (blocked) {
+	console.log("The popup was blocked!")
+}</pre>
+    </li>
+    <li>
+    	<h2>间歇调用和超时调用 setInterval()  setTimeOut()</h2>
+    	<strong>使用超时调用来模拟间歇调用是一种最佳模式。</strong>
+    	<p>间歇调用缺点：函数的执行时间比间歇调用的时间长的时候,后一个间歇调用可能会在前一个间歇调用结束之前启动。</p>
+    	<p>在setTimeout中的业务会被阻塞到空闲时执行，而setInterval不会受其他业务的阻塞。</p>
+    	<p>setInterval(fn,500)则表示的是，每隔500ms执行一次,这里需要注意，不管在500ms时间内fn有没有运行完。500ms之后都将会再次执行fn</p>
+    	<pre>
+var start = 0,
+	end = 10;
+function setHtmlStyle() {
+	start++;
+
+	console.log(start);
+
+	if (start < end) {
+		setTimeout(setHtmlStyle, 500);
+	} else {
+		console.log("setTimeOut Done");
+	}
+}
+
+setTimeout(setHtmlStyle, 500);
+    	</pre>
+    </li>
+  </ol>
+
+<h1>location对象</h1>
+<p>提供与当前窗口中加载的文档有关的信息</p>
+<ol>
+	<li></li>
+</ol>
+  <script src="js/BOM.js"></script>
+</body>
+
+</html>
